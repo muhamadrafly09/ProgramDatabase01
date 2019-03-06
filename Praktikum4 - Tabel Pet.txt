@@ -1,0 +1,122 @@
+C:\Users\Lenovo>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 14
+Server version: 10.1.30-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database praktikum4;
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [(none)]> use praktikum4;
+Database changed
+MariaDB [praktikum4]> create table pet
+    -> (name text(10),
+    -> owner text(10),
+    -> species text(10),
+    -> sex varchar(5),
+    -> birth date,
+    -> death date);
+Query OK, 0 rows affected (0.33 sec)
+
+MariaDB [praktikum4]>  insert into pet(name, owner, species, sex, birth, death)
+    -> values
+    -> ('Puffball', 'Diane', 'Hamster', 'F', '1999-03-03', 'NULL'),
+    -> ('Claws', 'Gwen', 'Cat', 'M', '1994-03-17', 'NULL'),
+    -> ('Fluffy', 'Harold', 'Cat', 'F', '1993-02-04', 'NULL'),
+    -> ('Buffy', 'Harold', 'Dog', 'F', '1989-05-13', 'NULL'),
+    -> ('Fang', 'Benny', 'Dog', 'M', '1990-08-27', 'NULL'),
+    -> ('Bowser', 'Diane', 'Dog', 'M', '1989-08-31', '1995-07-29'),
+    -> ('Chirpy', 'Gwen', 'Bird', 'F', '1998-09-11', 'NULL'),
+    -> ('Whistler', 'Gwen', 'Bird', 'NULL', '1997-12-09', 'NULL'),
+    -> ('Slim', 'Benny', 'Snake', 'M', '1996-04-29', 'NULL');
+Query OK, 9 rows affected, 8 warnings (0.18 sec)
+Records: 9  Duplicates: 0  Warnings: 8
+
+MariaDB [praktikum4]> select * from pet;
++----------+--------+---------+------+------------+------------+
+| name     | owner  | species | sex  | birth      | death      |
++----------+--------+---------+------+------------+------------+
+| Puffball | Diane  | Hamster | F    | 1999-03-03 | 0000-00-00 |
+| Claws    | Gwen   | Cat     | M    | 1994-03-17 | 0000-00-00 |
+| Fluffy   | Harold | Cat     | F    | 1993-02-04 | 0000-00-00 |
+| Buffy    | Harold | Dog     | F    | 1989-05-13 | 0000-00-00 |
+| Fang     | Benny  | Dog     | M    | 1990-08-27 | 0000-00-00 |
+| Bowser   | Diane  | Dog     | M    | 1989-08-31 | 1995-07-29 |
+| Chirpy   | Gwen   | Bird    | F    | 1998-09-11 | 0000-00-00 |
+| Whistler | Gwen   | Bird    | NULL | 1997-12-09 | 0000-00-00 |
+| Slim     | Benny  | Snake   | M    | 1996-04-29 | 0000-00-00 |
++----------+--------+---------+------+------------+------------+
+9 rows in set (0.00 sec)
+
+MariaDB [praktikum4]> select owner, count(species) from pet group by owner;
++--------+----------------+
+| owner  | count(species) |
++--------+----------------+
+| Benny  |              2 |
+| Diane  |              2 |
+| Gwen   |              3 |
+| Harold |              2 |
++--------+----------------+
+4 rows in set (0.07 sec)
+
+MariaDB [praktikum4]> select species, count(species) from pet group by species;
++---------+----------------+
+| species | count(species) |
++---------+----------------+
+| Bird    |              2 |
+| Cat     |              2 |
+| Dog     |              3 |
+| Hamster |              1 |
+| Snake   |              1 |
++---------+----------------+
+5 rows in set (0.08 sec)
+
+MariaDB [praktikum4]> select sex, count(sex) from pet group by sex;
++------+------------+
+| sex  | count(sex) |
++------+------------+
+| F    |          4 |
+| M    |          4 |
+| NULL |          1 |
++------+------------+
+3 rows in set (0.00 sec)
+
+MariaDB [praktikum4]> select species, sex, count(species) as jumlah from pet group by species;
++---------+------+--------+
+| species | sex  | jumlah |
++---------+------+--------+
+| Bird    | F    |      2 |
+| Cat     | M    |      2 |
+| Dog     | F    |      3 |
+| Hamster | F    |      1 |
+| Snake   | M    |      1 |
++---------+------+--------+
+5 rows in set (0.07 sec)
+
+MariaDB [praktikum4]> select species, sex, count(sex) from pet where species = 'Dog' or species = 'Cat' group by species, sex;
++---------+------+------------+
+| species | sex  | count(sex) |
++---------+------+------------+
+| Cat     | F    |          1 |
+| Cat     | M    |          1 |
+| Dog     | F    |          1 |
+| Dog     | M    |          2 |
++---------+------+------------+
+4 rows in set (0.04 sec)
+
+MariaDB [praktikum4]> select sex, count(name) as jumlah from pet where sex is not NULL group by sex;
++------+--------+
+| sex  | jumlah |
++------+--------+
+| F    |      4 |
+| M    |      4 |
+| NULL |      1 |
++------+--------+
+3 rows in set (0.00 sec)
+
+MariaDB [praktikum4]>

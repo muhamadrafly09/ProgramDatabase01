@@ -1,0 +1,172 @@
+C:\Users\Lenovo>cd c:\xampp\mysql\bin
+
+c:\xampp\mysql\bin>mysql.exe -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11
+Server version: 10.1.30-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> create database praktikum2;
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [(none)]> use praktikum2;
+Database changed
+MariaDB [praktikum2]> create table mahasiswa
+    -> (NIM int(10) primary key,
+    -> Nama varchar(20) not null,
+    -> AlamatJalan varchar(20),
+    -> Kota varchar(20) not null,
+    -> KodePos int(10),
+    -> NoHP int(15),
+    -> JenisKelamin varchar(12) not null,
+    -> TanggalLahir date not null,
+    -> KodeDosen int(10) );
+Query OK, 0 rows affected (0.35 sec)
+
+MariaDB [praktikum2]>  desc mahasiswa;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| NIM          | int(10)     | NO   | PRI | NULL    |       |
+| Nama         | varchar(20) | NO   |     | NULL    |       |
+| AlamatJalan  | varchar(20) | YES  |     | NULL    |       |
+| Kota         | varchar(20) | NO   |     | NULL    |       |
+| KodePos      | int(10)     | YES  |     | NULL    |       |
+| NoHP         | int(15)     | YES  |     | NULL    |       |
+| JenisKelamin | varchar(12) | NO   |     | NULL    |       |
+| TanggalLahir | date        | NO   |     | NULL    |       |
+| KodeDosen    | int(10)     | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+9 rows in set (0.04 sec)
+
+MariaDB [praktikum2]> insert into mahasiswa
+    -> (nim, nama, kota, jeniskelamin, tanggallahir)
+    -> values
+    -> ("11223344", "Ari Santoso", "Bekasi", "Laki-laki", "1998-10-12"),
+    -> ("11223345", "Ario Talib", "Cikarang", "Laki-laki", "1999-11-16"),
+    -> ("11223346", "Dina Harlina", "Karawang", "Perempuan", "1997-12-01"),
+    -> ("11223347", "Lisa Ayu", "Bekasi", "Perempuan", "1996-01-02"),
+    -> ("11223348", "Tiara Wahidah", "Bekasi", "Perempuan", "1980-02-05"),
+    -> ("11223349", "Anton Sinaga", "Cikarang", "Laki-laki", "1988-03-10");
+Query OK, 6 rows affected (0.16 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [praktikum2]> select*from mahasiswa;
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| NIM      | Nama          | AlamatJalan | Kota     | KodePos | NoHP | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso   | NULL        | Bekasi   |    NULL | NULL | Laki-laki    | 1998-10-12   |      NULL |
+| 11223345 | Ario Talib    | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1999-11-16   |      NULL |
+| 11223346 | Dina Harlina  | NULL        | Karawang |    NULL | NULL | Perempuan    | 1997-12-01   |      NULL |
+| 11223347 | Lisa Ayu      | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1996-01-02   |      NULL |
+| 11223348 | Tiara Wahidah | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1980-02-05   |      NULL |
+| 11223349 | Anton Sinaga  | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1988-03-10   |      NULL |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+6 rows in set (0.00 sec)
+
+MariaDB [praktikum2]> update mahasiswa
+    -> set tanggallahir ="1979-08-31"
+    -> where nim ="11223344";
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [praktikum2]> select*from mahasiswa;
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| NIM      | Nama          | AlamatJalan | Kota     | KodePos | NoHP | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso   | NULL        | Bekasi   |    NULL | NULL | Laki-laki    | 1979-08-31   |      NULL |
+| 11223345 | Ario Talib    | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1999-11-16   |      NULL |
+| 11223346 | Dina Harlina  | NULL        | Karawang |    NULL | NULL | Perempuan    | 1997-12-01   |      NULL |
+| 11223347 | Lisa Ayu      | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1996-01-02   |      NULL |
+| 11223348 | Tiara Wahidah | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1980-02-05   |      NULL |
+| 11223349 | Anton Sinaga  | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1988-03-10   |      NULL |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+6 rows in set (0.00 sec)
+
+MariaDB [praktikum2]> select*from mahasiswa where nim ="11223344";
++----------+-------------+-------------+--------+---------+------+--------------+--------------+-----------+
+| NIM      | Nama        | AlamatJalan | Kota   | KodePos | NoHP | JenisKelamin | TanggalLahir | KodeDosen |
++----------+-------------+-------------+--------+---------+------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso | NULL        | Bekasi |    NULL | NULL | Laki-laki    | 1979-08-31   |      NULL |
++----------+-------------+-------------+--------+---------+------+--------------+--------------+-----------+
+1 row in set (0.00 sec)
+
+MariaDB [praktikum2]> delete from mahasiswa where nim ="11223346";
+Query OK, 1 row affected (0.16 sec)
+
+MariaDB [praktikum2]>  select*from mahasiswa;
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| NIM      | Nama          | AlamatJalan | Kota     | KodePos | NoHP | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso   | NULL        | Bekasi   |    NULL | NULL | Laki-laki    | 1979-08-31   |      NULL |
+| 11223345 | Ario Talib    | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1999-11-16   |      NULL |
+| 11223347 | Lisa Ayu      | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1996-01-02   |      NULL |
+| 11223348 | Tiara Wahidah | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1980-02-05   |      NULL |
+| 11223349 | Anton Sinaga  | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1988-03-10   |      NULL |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+MariaDB [praktikum2]> select nim, nama, kota, jeniskelamin, tanggallahir from mahasiswa
+    -> where tanggallahir >="1996-01-02"
+    -> order by nim;
++----------+------------+----------+--------------+--------------+
+| nim      | nama       | kota     | jeniskelamin | tanggallahir |
++----------+------------+----------+--------------+--------------+
+| 11223345 | Ario Talib | Cikarang | Laki-laki    | 1999-11-16   |
+| 11223347 | Lisa Ayu   | Bekasi   | Perempuan    | 1996-01-02   |
++----------+------------+----------+--------------+--------------+
+2 rows in set (0.00 sec)
+
+MariaDB [praktikum2]> select*from mahasiswa
+    -> where kota ="Bekasi"
+    -> and jeniskelamin ="Perempuan";
++----------+---------------+-------------+--------+---------+------+--------------+--------------+-----------+
+| NIM      | Nama          | AlamatJalan | Kota   | KodePos | NoHP | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+-------------+--------+---------+------+--------------+--------------+-----------+
+| 11223347 | Lisa Ayu      | NULL        | Bekasi |    NULL | NULL | Perempuan    | 1996-01-02   |      NULL |
+| 11223348 | Tiara Wahidah | NULL        | Bekasi |    NULL | NULL | Perempuan    | 1980-02-05   |      NULL |
++----------+---------------+-------------+--------+---------+------+--------------+--------------+-----------+
+2 rows in set (0.00 sec)
+
+MariaDB [praktikum2]> select*from mahasiswa
+    -> where kota ="Bekasi"
+    -> and jeniskelamin ="laki-laki"
+    -> or tanggallahir <="1997"
+    -> and jeniskelamin ="perempuan"
+    -> order by nim;
++----------+-------------+-------------+--------+---------+------+--------------+--------------+-----------+
+| NIM      | Nama        | AlamatJalan | Kota   | KodePos | NoHP | JenisKelamin | TanggalLahir | KodeDosen |
++----------+-------------+-------------+--------+---------+------+--------------+--------------+-----------+
+| 11223344 | Ari Santoso | NULL        | Bekasi |    NULL | NULL | Laki-laki    | 1979-08-31   |      NULL |
++----------+-------------+-------------+--------+---------+------+--------------+--------------+-----------+
+1 row in set, 1 warning (0.00 sec)
+
+MariaDB [praktikum2]> select nama, alamatjalan from mahasiswa;
++---------------+-------------+
+| nama          | alamatjalan |
++---------------+-------------+
+| Ari Santoso   | NULL        |
+| Ario Talib    | NULL        |
+| Lisa Ayu      | NULL        |
+| Tiara Wahidah | NULL        |
+| Anton Sinaga  | NULL        |
++---------------+-------------+
+5 rows in set (0.00 sec)
+
+MariaDB [praktikum2]> select*from mahasiswa
+    -> order by nama asc;
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| NIM      | Nama          | AlamatJalan | Kota     | KodePos | NoHP | JenisKelamin | TanggalLahir | KodeDosen |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+| 11223349 | Anton Sinaga  | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1988-03-10   |      NULL |
+| 11223344 | Ari Santoso   | NULL        | Bekasi   |    NULL | NULL | Laki-laki    | 1979-08-31   |      NULL |
+| 11223345 | Ario Talib    | NULL        | Cikarang |    NULL | NULL | Laki-laki    | 1999-11-16   |      NULL |
+| 11223347 | Lisa Ayu      | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1996-01-02   |      NULL |
+| 11223348 | Tiara Wahidah | NULL        | Bekasi   |    NULL | NULL | Perempuan    | 1980-02-05   |      NULL |
++----------+---------------+-------------+----------+---------+------+--------------+--------------+-----------+
+5 rows in set (0.00 sec)
+
+MariaDB [praktikum2]>
